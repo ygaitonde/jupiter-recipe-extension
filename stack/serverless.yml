@@ -68,7 +68,7 @@ functions:
             authorizer: aws_iam
   update:
     # Defines an HTTP API endpoint that calls the main function in update.js
-    # - path: url path is /notes/{id}
+    # - path: url path is /recipes/{id}
     # - method: PUT request
     handler: update.main
     events:
