@@ -1,6 +1,5 @@
-service: notes-app-api
+service: recipes-app-api
 
-# Create an optimized package for our functions
 package:
   individually: true
 
@@ -14,3 +13,34 @@ provider:
   runtime: nodejs12.x
   stage: prod
   region: us-east-1
+
+  environment:
+    tableName: recipe-chrome-extension
+
+  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+
+functions:
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /recipes
+  # - method: POST request
+  # - cors: enabled CORS 
+  # - authorizer: authenticate using the AWS IAM role
+  create:
+    handler: create.main
+    events:
+      - http:
+          path: recipes
+          method: post
+          cors: true
+          authorizer: aws_iam

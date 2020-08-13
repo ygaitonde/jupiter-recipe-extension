@@ -1,0 +1,8 @@
+{
+    "body": "{\"name\":\"recipe test\",\"content\":{\"test item 2oz\":2,\"test item 2 4oz\":4}}",
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }
