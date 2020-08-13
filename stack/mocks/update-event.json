@@ -1,0 +1,11 @@
+{
+    "body": "{\"content\":{\"updated test item 2oz\":2,\"test item 2 4oz\":4}}",
+  "pathParameters": {
+    "id": "a68c4440-dd1a-11ea-857c-afd69800814c"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

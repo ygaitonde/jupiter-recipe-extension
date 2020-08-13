@@ -44,3 +44,47 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  get:
+    # Defines an HTTP API endpoint that calls the main function in get.js
+    # - path: url path is /recipes/{id}
+    # - method: GET request
+    handler: get.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+  list:
+    # Defines an HTTP API endpoint that calls the main function in list.js
+    # - path: url path is /recipes
+    # - method: GET request
+      handler: list.main
+      events:
+        - http:
+            path: recipes
+            method: get
+            cors: true
+            authorizer: aws_iam
+  update:
+    # Defines an HTTP API endpoint that calls the main function in update.js
+    # - path: url path is /notes/{id}
+    # - method: PUT request
+    handler: update.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  delete:
+    # Defines an HTTP API endpoint that calls the main function in delete.js
+    # - path: url path is /recipes/{id}
+    # - method: DELETE request
+    handler: delete.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam

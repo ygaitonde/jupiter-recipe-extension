@@ -10,7 +10,7 @@ export const main = handler(async (event, context) => {
     // - 'recipeId': uuid
     // - 'recipeName' : user defined recipe name from request body
     // - 'content': from request body
-    // - 'createdAt': current unix timestamp
+    // - 'createdAt': current JS timestamp
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       recipeId: uuid.v1(),
