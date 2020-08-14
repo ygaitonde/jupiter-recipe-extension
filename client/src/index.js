@@ -6,6 +6,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import config from './config';
+import { ApolloProvider, graphql } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 Amplify.configure({
   Auth: {
@@ -26,10 +30,21 @@ Amplify.configure({
   }
 });
 
+const httpLink = createHttpLink({
+  uri: 'graphql.jupiter.co'
+})
+
+const client = new ApolloClient({
+  link: 'graphql.jupiter.co',
+  cache: new InMemoryCache()
+})
+
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <ApolloProvider client={client}>
+    <Router>
+      <App />
+    </Router>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
