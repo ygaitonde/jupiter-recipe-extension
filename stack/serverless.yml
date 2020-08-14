@@ -88,3 +88,7 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}

@@ -3,6 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
+import NewRecipe from "./containers/NewRecipe";
+import Recipes from "./containers/Recipes";
 import NotFound from "./containers/NotFound";
 
 export default function Routes() {
@@ -16,6 +18,12 @@ export default function Routes() {
       </Route>
       <Route exact path="/signup">
         <Signup />
+      </Route>
+      <Route exact path="/recipes/new">
+        <NewRecipe />
+      </Route>
+      <Route exact path="/recipes/:id">
+        <Recipes />
       </Route>
       {/* catch unmatched routes */}
       <Route>

@@ -3,6 +3,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 
 export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
+  console.log("data: ", data);
   const params = {
     TableName: process.env.tableName,
     // 'Key'
@@ -14,9 +15,10 @@ export const main = handler(async (event, context) => {
     },
     // 'UpdateExpression' defines the attributes to be updated
     // 'ExpressionAttributeValues' defines the value in the update expression
-    UpdateExpression: "SET content = :content",
+    UpdateExpression: "SET content = :content, recipeName = :recipeName",
     ExpressionAttributeValues: {
-      ":content": data.content || null
+      ":content": data.recipe.content || null,
+      ":recipeName": data.recipe.recipeName || ""
     },
     // 'ReturnValues' specifies if and how to return the item's attributes,
     // where ALL_NEW returns all attributes of the item after the update; you
