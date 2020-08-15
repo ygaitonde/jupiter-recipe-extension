@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import ProductList from "../components/ProductList"
 import { API, Predicates } from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import axios from 'axios'
