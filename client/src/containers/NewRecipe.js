@@ -5,12 +5,16 @@ import LoaderButton from "../components/LoaderButton";
 import ProductList from "../components/ProductList"
 import { API } from "aws-amplify";
 import { onError } from "../libs/errorLib";
+import axios from 'axios'
 import config from "../config";
 import "./NewRecipe.css";
 
 export default function NewRecipe() {
   const history = useHistory();
   const [name, setName] = useState("");
+  const [content, setContent] = useState([])
+  const [query, setQuery] = useState("")
+  const [results, setResults] = useState({})
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -36,9 +40,55 @@ export default function NewRecipe() {
     return API.post("recipes", "/recipes", {
       body: {
           name: name,
-          content: {}
+          content: content
       }
     });
+  }
+
+  function handleQueryChange(val){
+    setQuery(val)
+    if ( query==="" ) {
+      setResults({})
+    } else {
+      fetchSearchResults();
+    }
+  };
+
+  function fetchSearchResults(){
+    const terms = `
+      query{
+        search(page:0, query: "${query}"){
+          name
+        }
+      }
+    `;
+    const url = "https://graphql.jupiter.co/";
+    /*const opts = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query })
+    };*/
+    axios({
+      url: url,
+      method: 'post',
+      data: {
+        query: `
+          query{
+            search(page:0, query: "${query}"){
+              name
+            }
+          }
+        `
+      }
+    })
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch(console.error);
+  }
+
+  function renderSearchResults() {
+    return
   }
 
   return (
@@ -52,7 +102,18 @@ export default function NewRecipe() {
             onChange={e => setName(e.target.value)}
           />
         </FormGroup>
-        <ProductList />
+        <hr></hr>
+        <h4>Add ingredients!</h4>
+        <FormGroup controlId="query">
+          <FormControl
+            value={query}
+            placeholder="Search Jupiter Catalog"
+            componentClass="input"
+            onChange={e => {
+              handleQueryChange(e.target.value)
+            }}
+          />
+        </FormGroup>
         <LoaderButton
           block
           type="submit"

@@ -30,10 +30,6 @@ Amplify.configure({
   }
 });
 
-const httpLink = createHttpLink({
-  uri: 'graphql.jupiter.co'
-})
-
 const client = new ApolloClient({
   link: 'graphql.jupiter.co',
   cache: new InMemoryCache()
