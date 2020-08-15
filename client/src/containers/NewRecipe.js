@@ -17,8 +17,10 @@ export default function NewRecipe() {
   const [results, setResults] = useState({})
   const [isLoading, setIsLoading] = useState(false);
 
-  function validateForm() {
-    return name.length > 0;
+  useEffect(() => setContent([]), []);
+
+  function validateForm(){
+    return name.length > 0
   }
 
   async function handleSubmit(event) {
@@ -54,7 +56,7 @@ export default function NewRecipe() {
     }
   };
 
-  function fetchSearchResults(){
+  async function fetchSearchResults(){
     const terms = `
       query{
         search(page:0, query: "${query}"){
@@ -68,7 +70,7 @@ export default function NewRecipe() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query })
     };*/
-    axios({
+    await axios({
       url: url,
       method: 'post',
       data: {
@@ -76,19 +78,49 @@ export default function NewRecipe() {
           query{
             search(page:0, query: "${query}"){
               name
+              productId{
+                value
+              }
             }
           }
         `
       }
     })
     .then((res) => {
-      setResults(res.data.data.search)
+      setResults(res.data.data.search.slice(0,5))
     })
     .catch(console.error);
   }
 
-  function renderSearchResults() {
-    return
+  function renderSearchResults(){
+    if (Object.keys(results).length && results.length) {
+      return (
+        <div className='card'>
+          {results.map((result) => {
+            return (
+              <div key={result.productId.value}>
+                <a href={`https://app.jupiter.co/product/${result.productId.value}`} target='_blank'>
+                  <h6 className='card-text'>{result.name}</h6>
+                </a>
+                <button className='add-button' onClick={(e) => handleProductClick(e, result.name, result.productId.value)}>Add</button>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+  };
+
+  async function handleProductClick(e, name, productId){
+    e.preventDefault()
+    console.log(content)
+    setQuery("")
+    setResults([])
+
+    let ingredient = {name: name, amount: 1, productId: productId}
+    setContent(content => [...content, ingredient])
+
+    console.log(content)
   }
 
   return (
@@ -114,6 +146,7 @@ export default function NewRecipe() {
             }}
           />
         </FormGroup>
+        {renderSearchResults()}
         <LoaderButton
           block
           type="submit"
