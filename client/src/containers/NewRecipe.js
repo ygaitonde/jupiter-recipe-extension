@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import ProductList from "../components/ProductList"
-import { API } from "aws-amplify";
+import { API, Predicates } from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import axios from 'axios'
 import config from "../config";
@@ -122,7 +122,7 @@ export default function NewRecipe() {
                   <h6 className='card-text'>{ingredient.name}</h6>
                 </a>
                 <label className='card-text' for="quantity">Quantity:</label>
-                <input defaultValue={1} type="number" id="quantity" name="quantity" min="1" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
+                <input defaultValue={1} size="2" type="number" id="quantity" name="quantity" min="1" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
               </div>
             );
           })}
@@ -137,8 +137,11 @@ export default function NewRecipe() {
   }
 
   function handleQuantityChange(val ,ingredient){
-    console.log(val)
-    console.log(ingredient)
+    let contentCopy = [...content]
+    let oldIngredient = contentCopy.find(element => element.name == ingredient.name)
+    
+    oldIngredient.quantity = parseInt(val)
+    setContent(content => [...contentCopy])
   }
 
   function handleProductClick(e, name, productId){
@@ -156,7 +159,7 @@ export default function NewRecipe() {
   return (
     <div className="NewRecipe">
       <form onSubmit={handleSubmit}>
-        <h4>Recipe name</h4>
+        <h4>Recipe name:</h4>
         <FormGroup controlId="name">
           <FormControl
             value={name}
@@ -165,9 +168,10 @@ export default function NewRecipe() {
           />
         </FormGroup>
         <hr/>
+        <h4>Recipe Ingredients:</h4>
         {renderRecipeContent()}
         <hr/>
-        <h4>Add ingredients!</h4>
+        <h4>Add ingredients:</h4>
         <FormGroup controlId="query">
           <FormControl
             value={query}
