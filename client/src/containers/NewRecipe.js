@@ -17,10 +17,8 @@ export default function NewRecipe() {
   const [results, setResults] = useState({})
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => setContent([]), []);
-
   function validateForm(){
-    return name.length > 0
+    return name.length > 0 && content.length > 0
   }
 
   async function handleSubmit(event) {
@@ -111,13 +109,45 @@ export default function NewRecipe() {
     }
   };
 
-  async function handleProductClick(e, name, productId){
+  function renderRecipeContent(){
+    console.log(content.length)
+    if (content.length > 0) {
+      return (
+        <div className='card'>
+
+          {content.map((ingredient) => {
+            return (
+              <div key={ingredient.productId}>
+                <a href={`https://app.jupiter.co/product/${ingredient.productId}`} target='_blank'>
+                  <h6 className='card-text'>{ingredient.name}</h6>
+                </a>
+                <label className='card-text' for="quantity">Quantity:</label>
+                <input defaultValue={1} type="number" id="quantity" name="quantity" min="1" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    else{
+      return (
+        <h4>Your recipe is currently empty.</h4>
+      )
+    }
+  }
+
+  function handleQuantityChange(val ,ingredient){
+    console.log(val)
+    console.log(ingredient)
+  }
+
+  function handleProductClick(e, name, productId){
     e.preventDefault()
     console.log(content)
     setQuery("")
     setResults([])
 
-    let ingredient = {name: name, amount: 1, productId: productId}
+    let ingredient = {name: name, quantity: 1, productId: productId}
     setContent(content => [...content, ingredient])
 
     console.log(content)
@@ -134,7 +164,9 @@ export default function NewRecipe() {
             onChange={e => setName(e.target.value)}
           />
         </FormGroup>
-        <hr></hr>
+        <hr/>
+        {renderRecipeContent()}
+        <hr/>
         <h4>Add ingredients!</h4>
         <FormGroup controlId="query">
           <FormControl
