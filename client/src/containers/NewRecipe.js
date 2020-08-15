@@ -82,7 +82,7 @@ export default function NewRecipe() {
       }
     })
     .then((res) => {
-      console.log(res.data)
+      setResults(res.data.data.search)
     })
     .catch(console.error);
   }
