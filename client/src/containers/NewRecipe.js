@@ -17,6 +17,10 @@ export default function NewRecipe() {
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm(){
+    // make sure that if they cancelled deleting an ingredient they put a new quantity
+    for (let i = 0; i<content.length; i++){
+      if(content[i].quantity<1){ return false }
+    }
     return name.length > 0 && content.length > 0
   }
 
@@ -92,7 +96,7 @@ export default function NewRecipe() {
   function renderSearchResults(){
     if (Object.keys(results).length && results.length) {
       return (
-        <div className='card'>
+        <div className='search-card'>
           {results.map((result) => {
             return (
               <div key={result.productId.value}>
@@ -121,7 +125,7 @@ export default function NewRecipe() {
                   <h6 className='card-text'>{ingredient.name}</h6>
                 </a>
                 <label className='card-text' for="quantity">Quantity:</label>
-                <input defaultValue={1} size="2" type="number" id="quantity" name="quantity" min="0" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
+                <input defaultValue={ingredient.quantity} size="2" type="number" id="quantity" name="quantity" min="0" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
               </div>
             );
           })}
@@ -140,14 +144,13 @@ export default function NewRecipe() {
     let oldIngredient = contentCopy.find(element => element.name == ingredient.name)
     //delete the ingredient if quantity is zero
     if(val==0 && window.confirm("Are you sure you want to remove this ingredient?")){
-      console.log("here")
       const index = contentCopy.indexOf(oldIngredient)
       contentCopy.splice(index, 1);
     }
     else{
       oldIngredient.quantity = parseInt(val)
     }
-
+    console.log(contentCopy)
     setContent(content => [...contentCopy])
   }
 

@@ -10,7 +10,7 @@ export default function LoaderButton({
 }) {
   return (
     <Button
-      className={`LoaderButton ${className}`}
+      className={`${className} LoaderButton`}
       disabled={disabled || isLoading}
       {...props}
     >

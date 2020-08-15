@@ -1,5 +1,6 @@
 .NewRecipe form {
     padding-bottom: 15px;
+    margin-bottom: 0px;
   }
   
 .NewRecipe form textarea {
@@ -10,6 +11,11 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
+  margin-bottom: 25px;
+}
+
+.form-group{
+  margin-bottom:0px
 }
 
 .card-text{
@@ -21,6 +27,12 @@
   margin: 0;
   display: inline-block;
 
+}
+
+.search-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  margin-bottom:25px
 }
 
 .add-button {

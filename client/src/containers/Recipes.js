@@ -25,9 +25,9 @@ export default function Recipes() {
       try {
         const recipe = await loadRecipe();
         const { content, recipeName } = recipe;
-
         setName(recipeName);
         setRecipe(recipe);
+        setContent(content)
       } catch (e) {
         onError(e);
       }
@@ -92,12 +92,37 @@ export default function Recipes() {
       setIsDeleting(false);
     }
   }
+
+  function renderRecipeContent(){
+    console.log(content.length)
+    if (content.length > 0) {
+      return (
+        <div className='card'>
+          {content.map((ingredient) => {
+            return (
+              <div className='card-text' key={ingredient.productId}>
+                <a href={`https://app.jupiter.co/product/${ingredient.productId}`} target='_blank'>
+                  <h6 className='card-text'>{ingredient.name}</h6>
+                </a>
+                <h6 className='card-text'>Quantity: {ingredient.quantity}</h6>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    else{
+      return (
+        <h5>ERROR: Empty Recipe</h5>
+      )
+    }
+  }
   
   return (
     <div className="Recipes">
       {recipe && (
         <form onSubmit={handleSubmit}>
-          <h4>Recipe Name</h4>
+          <h4>Recipe Name:</h4>
           <FormGroup controlId="name">
             <FormControl
               value={name}
@@ -106,6 +131,9 @@ export default function Recipes() {
               onChange={e => setName(e.target.value)}
             />
           </FormGroup>
+          <hr />
+          <h4>Recipe Contents</h4>
+          {renderRecipeContent()}
           <LoaderButton
             block
             type="submit"
