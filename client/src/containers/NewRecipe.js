@@ -131,7 +131,7 @@ export default function NewRecipe() {
     }
     else{
       return (
-        <h4>Your recipe is currently empty.</h4>
+        <h5>Your recipe has no ingredients - add some below!</h5>
       )
     }
   }
@@ -140,7 +140,7 @@ export default function NewRecipe() {
     let contentCopy = [...content]
     let oldIngredient = contentCopy.find(element => element.name == ingredient.name)
     //delete the ingredient if quantity is zero
-    if(val==0){
+    if(val==0 && window.confirm("Are you sure you want to remove this ingredient?")){
       console.log("here")
       const index = contentCopy.indexOf(oldIngredient)
       contentCopy.splice(index, 1);
