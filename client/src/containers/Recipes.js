@@ -12,6 +12,7 @@ export default function Recipes() {
   const history = useHistory();
   const [recipe, setRecipe] = useState(null);
   const [name, setName] = useState("");
+  const [content, setContent] = useState({})
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
