@@ -10,7 +10,7 @@ The extension was built with [React](https://reactjs.org/), [NodeJS](https://nod
 
 Clone this repository: `git clone git@github.com:Jupiter-Inc/take-home-challenge`.
 
-Add the extension to your browser, selecting the /dist folder (or manifest.json if using Firefox) when prompted.
+Add the extension to your browser, selecting the /client/dist folder (or manifest.json if using Firefox) when prompted.
 
 Click [here](https://webkul.com/blog/how-to-install-the-unpacked-extension-in-chrome/) for more details on how to install local Chrome extensions and [here](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/) for how to do it on Firefox.
 
