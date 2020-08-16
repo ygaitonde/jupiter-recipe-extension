@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import { API, Predicates } from "aws-amplify";
+import { API } from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import axios from 'axios'
-import config from "../config";
 import "./NewRecipe.css";
 
 export default function NewRecipe() {
@@ -62,19 +61,7 @@ export default function NewRecipe() {
   };
 
   async function fetchSearchResults(){
-    const terms = `
-      query{
-        search(page:0, query: "${query}"){
-          name
-        }
-      }
-    `;
     const url = "https://graphql.jupiter.co/";
-    /*const opts = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query })
-    };*/
     await axios({
       url: url,
       method: 'post',
