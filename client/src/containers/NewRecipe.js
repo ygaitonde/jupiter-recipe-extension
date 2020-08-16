@@ -129,7 +129,7 @@ export default function NewRecipe() {
                   <h6 className='card-text'>{ingredient.name}</h6>
                 </a>
                 <label className='card-text' for="quantity">Quantity:</label>
-                <input defaultValue={ingredient.quantity} size="2" type="number" id="quantity" name="quantity" min="0" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
+                <input className='quant-input' defaultValue={ingredient.quantity} type="number" id="quantity" name="quantity" min="0" onChange={(e) => handleQuantityChange(e.target.value, ingredient)}/> 
               </div>
             );
           })}
@@ -147,7 +147,7 @@ export default function NewRecipe() {
     let contentCopy = [...content]
     let oldIngredient = contentCopy.find(element => element.name == ingredient.name)
     //delete the ingredient if quantity is zero
-    if(val==0 && window.confirm("Are you sure you want to remove this ingredient?")){
+    if(parseInt(val)===0 && window.confirm("Are you sure you want to remove this ingredient?")){
       const index = contentCopy.indexOf(oldIngredient)
       contentCopy.splice(index, 1);
     }
