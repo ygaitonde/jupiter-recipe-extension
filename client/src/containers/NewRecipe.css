@@ -36,7 +36,7 @@
   margin-bottom:25px
 }
 
-.add-button {
+.add-btn {
   background: rgb(255, 92, 92);
   border-color: rgb(255, 92, 92);
   color:white;
@@ -44,4 +44,20 @@
   padding-left:10px;
   padding-right: 10px;
   margin-top: 15px;
+}
+
+.create-btn {
+  background: rgb(255,92,92);
+  border-color: rgb(255, 92, 92);
+}
+
+.btn-primary {
+  color: #fff;
+  background-color:rgb(255,92,92);
+  border-color: rgb(255,92,92);
+}
+.btn-primary:hover{
+  color: #fff;
+  background-color: rgb(237, 88, 88) !important;
+  border-color: rgb(237, 88, 88);
 }

@@ -54,7 +54,7 @@ export default function NewRecipe() {
   }
 
   function handleQueryChange(){
-    if ( query==="" ) {
+    if ( query=="" ) {
       setResults({})
     } else {
       fetchSearchResults();
@@ -107,7 +107,7 @@ export default function NewRecipe() {
                 <a href={`https://app.jupiter.co/product/${result.productId.value}`} target='_blank'>
                   <h6 className='card-text'>{result.name}</h6>
                 </a>
-                <button className='add-button' onClick={(e) => handleProductClick(e, result.name, result.productId.value)}>Add</button>
+                <button className='add-btn' onClick={(e) => handleProductClick(e, result.name, result.productId.value)}>Add</button>
               </div>
             );
           })}
