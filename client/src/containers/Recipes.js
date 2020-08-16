@@ -97,10 +97,10 @@ export default function Recipes() {
     console.log(content.length)
     if (content.length > 0) {
       return (
-        <div className='card'>
+        <div>
           {content.map((ingredient) => {
             return (
-              <div className='card-text' key={ingredient.productId}>
+              <div className='card' key={ingredient.productId}>
                 <a href={`https://app.jupiter.co/product/${ingredient.productId}`} target='_blank'>
                   <h6 className='card-text'>{ingredient.name}</h6>
                 </a>
@@ -132,8 +132,9 @@ export default function Recipes() {
             />
           </FormGroup>
           <hr />
-          <h4>Recipe Contents</h4>
+          <h4>Recipe Contents:</h4>
           {renderRecipeContent()}
+          <hr />
           <LoaderButton
             block
             type="submit"

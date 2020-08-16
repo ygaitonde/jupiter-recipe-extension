@@ -16,6 +16,11 @@ export default function NewRecipe() {
   const [results, setResults] = useState({})
   const [isLoading, setIsLoading] = useState(false);
 
+
+  useEffect(() => {
+    handleQueryChange();
+  }, [query]);
+
   function validateForm(){
     // make sure that if they cancelled deleting an ingredient they put a new quantity
     for (let i = 0; i<content.length; i++){
@@ -48,8 +53,7 @@ export default function NewRecipe() {
     });
   }
 
-  function handleQueryChange(val){
-    setQuery(val)
+  function handleQueryChange(){
     if ( query==="" ) {
       setResults({})
     } else {
@@ -188,7 +192,7 @@ export default function NewRecipe() {
             placeholder="Search Jupiter Catalog"
             componentClass="input"
             onChange={e => {
-              handleQueryChange(e.target.value)
+              setQuery(e.target.value)
             }}
           />
         </FormGroup>
