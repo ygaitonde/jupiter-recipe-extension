@@ -194,6 +194,7 @@ export default function NewRecipe() {
         {renderSearchResults()}
         <LoaderButton
           block
+          className="create-btn"
           type="submit"
           bsSize="large"
           bsStyle="primary"

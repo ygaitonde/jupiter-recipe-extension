@@ -51,12 +51,13 @@
   border-color: rgb(255, 92, 92);
 }
 
-.btn-primary {
+.create-btn.btn-primary {
   color: #fff;
   background-color:rgb(255,92,92);
   border-color: rgb(255,92,92);
 }
-.btn-primary:hover{
+
+.create-btn.btn-primary:hover{
   color: #fff;
   background-color: rgb(237, 88, 88) !important;
   border-color: rgb(237, 88, 88);
