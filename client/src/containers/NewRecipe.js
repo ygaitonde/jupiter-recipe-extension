@@ -209,6 +209,7 @@ export default function NewRecipe() {
     <div className="NewRecipe">
       <h4>Load a recipe from another site:</h4>
       <input
+        placeholder="Paste recipe URL here"
         onChange={e => setRecipeUrl(e.target.value)}
       />
       <button className="add-btn" onClick={(e) => getURLContent(e)}>Load Recipe</button>
