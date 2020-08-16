@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl } from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
 import { API } from "aws-amplify";
+import axios from 'axios'
+import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import config from "../config"
-import axios from 'axios'
 import "./NewRecipe.css";
 
 export default function NewRecipe() {
@@ -211,7 +211,7 @@ export default function NewRecipe() {
     }) 
     //bug: this isn't actually sending users back to the homepage
     .catch((error) => {
-      alert(error+"please reload the extension")
+      alert(error+". Please reload the extension")
       history.push("/")
     }); 
   }

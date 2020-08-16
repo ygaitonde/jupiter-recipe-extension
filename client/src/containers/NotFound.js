@@ -1,6 +1,6 @@
 import React from "react";
-import "./NotFound.css";
 import { useHistory} from "react-router-dom";
+import "./NotFound.css";
 
 export default function NotFound() {
   //Users shouldn't be able to access pages that would cause a 404 if using the extension normally, but
