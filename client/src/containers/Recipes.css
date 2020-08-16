@@ -13,5 +13,9 @@
     padding-right: 15px;
     margin: 0;
     display: inline-block;
-  
+  }
+
+  .social-icon{
+    display: inline-block;
+    margin:5px;
   }

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API } from "aws-amplify";
 import { FormGroup, FormControl } from "react-bootstrap";
+import { TwitterShareButton, FacebookShareButton, RedditShareButton } from "react-share"
+import {  SocialIcon } from 'react-social-icons'
 import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import "./Recipes.css";
@@ -12,7 +14,7 @@ export default function Recipes() {
   const history = useHistory();
   const [recipe, setRecipe] = useState(null);
   const [name, setName] = useState("");
-  const [content, setContent] = useState({})
+  const [content, setContent] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -121,46 +123,86 @@ export default function Recipes() {
       )
     }
   }
+
+  //create the text to be shared on social media based on the recipe content
+  //this function usually creates a string that is too long to tweet, but that is OK because 
+  //twitter allows users to edit a tweet that is too long rather than rejecting it 
+  function renderShareText(){
+    let i = 0
+    if(content.length < 1) { return };
+
+    let string = `Check out my recipe "${name}" which includes `
+    for(i;i<content.length-1;i++){
+      string+=`${content[i].name}, `
+    }
+    //add the last ingredient to the string properly
+    string+=` and ${content[content.length-1].name}! `
+    string+= "You can buy the ingredients using Jupiter's Grocery Service!"
+    return string
+  }
   
   // render the current ingredient list as well as the form which allows users to rename their recipies
   // and save their changes, or delete their recipe
   return (
     <div className="Recipes">
       {recipe && (
-        <form onSubmit={handleSubmit}>
-          <h4>Recipe Name:</h4>
-          <FormGroup controlId="name">
-            <FormControl
-              value={name}
-              placeholder="New recipe name"
-              componentClass="input"
-              onChange={e => setName(e.target.value)}
-            />
-          </FormGroup>
-          <hr />
-          <h4>Recipe Contents:</h4>
-          {renderRecipeContent()}
-          <hr />
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!validateForm()}
-          >
-            Save
-          </LoaderButton>
-          <LoaderButton
-            block
-            bsSize="large"
-            bsStyle="danger"
-            onClick={handleDelete}
-            isLoading={isDeleting}
-          >
-            Delete
-          </LoaderButton>
-        </form>
+        <>
+          <div className='social-icon'>
+            <TwitterShareButton
+              url='jupiter.co'
+              title={renderShareText()}
+            >
+              <SocialIcon network='twitter' />
+            </TwitterShareButton>
+            <FacebookShareButton
+              url='jupiter.co'
+              title={renderShareText()}
+            >
+              <SocialIcon network='facebook' />
+            </FacebookShareButton>
+            <RedditShareButton
+              url="jupiter.co"
+              title={renderShareText()}
+            >
+              <SocialIcon network='reddit' />
+            </RedditShareButton>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <h4>Recipe Name:</h4>
+            <FormGroup controlId="name">
+              <FormControl
+                value={name}
+                placeholder="New recipe name"
+                componentClass="input"
+                onChange={e => setName(e.target.value)}
+              />
+            </FormGroup>
+            <hr />
+            <h4>Recipe Contents:</h4>
+            {renderRecipeContent()}
+            <hr />
+            <LoaderButton
+              block
+              type="submit"
+              bsSize="large"
+              bsStyle="primary"
+              isLoading={isLoading}
+              disabled={!validateForm()}
+            >
+              Save
+            </LoaderButton>
+            <LoaderButton
+              block
+              bsSize="large"
+              bsStyle="danger"
+              onClick={handleDelete}
+              isLoading={isDeleting}
+            >
+              Delete
+            </LoaderButton>
+
+          </form>
+        </>
       )}
     </div>
   );
