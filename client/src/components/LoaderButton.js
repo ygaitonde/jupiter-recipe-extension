@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Glyphicon } from "react-bootstrap";
 import "./LoaderButton.css";
 
+//Button that display a spinning wheel after submission to convey backend processing
 export default function LoaderButton({
   isLoading,
   className='',

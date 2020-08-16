@@ -17,6 +17,7 @@ export default function Login() {
     password: ""
   });
 
+  //ensure that the login inputs are valid
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
   }
@@ -26,6 +27,8 @@ export default function Login() {
 
     setIsLoading(true);
 
+    //if the user's credentials are valid, sign them in, update Auth context, and return to them to the home page
+    //else show whats wrong and keep them on the login page 
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);

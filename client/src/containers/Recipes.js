@@ -6,6 +6,7 @@ import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import "./Recipes.css";
 
+//Component to render/allow changes to any recipe given the Recipe Id
 export default function Recipes() {
   const { id } = useParams();
   const history = useHistory();
@@ -21,6 +22,7 @@ export default function Recipes() {
     }
 
     async function onLoad() {
+      //get the recipe from the backend and update hooks
       try {
         const recipe = await loadRecipe();
         const { content, recipeName } = recipe;
@@ -35,11 +37,12 @@ export default function Recipes() {
     onLoad();
   }, [id]);
 
+  //only allow users to save valid changes
   function validateForm() {
-    //return content.length > 0 && name.length > 0
-    return true
+    return content.length > 0 && name.length > 0
   }
   
+  // update the recipe when the user makes changes
   function saveRecipe(recipe) {
     console.log(recipe)
     return API.put("recipes", `/recipes/${id}`, {
@@ -70,6 +73,7 @@ export default function Recipes() {
     return API.del("recipes", `/recipes/${id}`);
   }
   
+  //make sure users want to delete their recipies
   async function handleDelete(event) {
     event.preventDefault();
   
@@ -92,6 +96,7 @@ export default function Recipes() {
     }
   }
 
+  //use object mapping to render every product in the recipe
   function renderRecipeContent(){
     console.log(content.length)
     if (content.length > 0) {
@@ -117,6 +122,8 @@ export default function Recipes() {
     }
   }
   
+  // render the current ingredient list as well as the form which allows users to rename their recipies
+  // and save their changes, or delete their recipe
   return (
     <div className="Recipes">
       {recipe && (

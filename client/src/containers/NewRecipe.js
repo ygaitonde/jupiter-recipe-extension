@@ -15,11 +15,16 @@ export default function NewRecipe() {
   const [results, setResults] = useState({})
   const [isLoading, setIsLoading] = useState(false);
 
-
+  //whenever the query updates update the search results
   useEffect(() => {
-    handleQueryChange();
+    if ( query=="" ) {
+      setResults({})
+    } else {
+      fetchSearchResults();
+    }
   }, [query]);
 
+  //only allow the user to create a recipe if it has a name + at least one product
   function validateForm(){
     // make sure that if they cancelled deleting an ingredient they put a new quantity
     for (let i = 0; i<content.length; i++){
@@ -28,6 +33,7 @@ export default function NewRecipe() {
     return name.length > 0 && content.length > 0
   }
 
+  // create the recipe and redirect to home page
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
@@ -41,7 +47,7 @@ export default function NewRecipe() {
     }
   }
   
-  //TODO add content
+  // post new recipe to backend API
   function createRecipe(name) {
     console.log("name: ", name)
     return API.post("recipes", "/recipes", {
@@ -52,14 +58,7 @@ export default function NewRecipe() {
     });
   }
 
-  function handleQueryChange(){
-    if ( query=="" ) {
-      setResults({})
-    } else {
-      fetchSearchResults();
-    }
-  };
-
+  // get product search result from Jupiter GraphQL API. update results hook with API query results
   async function fetchSearchResults(){
     const url = "https://graphql.jupiter.co/";
     await axios({
@@ -84,6 +83,8 @@ export default function NewRecipe() {
     .catch(console.error);
   }
 
+  // use object mapping to render the results from the search
+  // renders link to product and a button that allows the user to add the product to their recipe
   function renderSearchResults(){
     if (Object.keys(results).length && results.length) {
       return (
@@ -103,6 +104,7 @@ export default function NewRecipe() {
     }
   };
 
+  // use object mapping to render all the recipe contents and change the quantity of each product
   function renderRecipeContent(){
     console.log(content.length)
     if (content.length > 0) {
@@ -130,6 +132,9 @@ export default function NewRecipe() {
     }
   }
 
+  //update each product's quantity in the recipe based on the user's selctions
+  //note: we are making a copy instead of directly updating the content because
+  //the async nature of hooks was causing problems elsewhere in the app
   function handleQuantityChange(val ,ingredient){
     let contentCopy = [...content]
     let oldIngredient = contentCopy.find(element => element.name == ingredient.name)
@@ -145,6 +150,7 @@ export default function NewRecipe() {
     setContent(content => [...contentCopy])
   }
 
+  //add user selected product to recipe 
   function handleProductClick(e, name, productId){
     e.preventDefault()
     console.log(content)
@@ -156,7 +162,9 @@ export default function NewRecipe() {
 
     console.log(content)
   }
-
+  
+  // render the form that allows user to create the name, see ingredients they've added,
+  // add new ingredients, and create the recipe
   return (
     <div className="NewRecipe">
       <form onSubmit={handleSubmit}>

@@ -13,10 +13,12 @@ function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
+  //load auth when component mounts
   useEffect(() => {
     onLoad();
   }, []);
   
+  //check the status of the user session. user only authenticates only set to true if Auth.currentSesion() goes through
   async function onLoad() {
     try {
       await Auth.currentSession();
@@ -28,15 +30,16 @@ function App() {
         onError(e)
       }
     }
-  
     setIsAuthenticating(false);
   }
 
+  //change the authentication when the users presses the log out button
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
     history.push("/login");
   }
+
 
   return (
     !isAuthenticating &&
@@ -50,7 +53,8 @@ function App() {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            {isAuthenticated
+            {  //change navbar items dynamically based on auth status
+              isAuthenticated
               ? <NavItem onClick={handleLogout}>Logout</NavItem>
               : <>
                   <LinkContainer to="/signup">

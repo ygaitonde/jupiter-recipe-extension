@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import config from './config';
 import './index.css';
 
+//Configure API + Auth w/ AWS
 Amplify.configure({
   Auth: {
     mandatorySignIn: true,

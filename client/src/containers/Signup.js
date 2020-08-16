@@ -25,6 +25,7 @@ export default function Signup() {
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
+  //only allow them to sign up if their credentials are valid
   function validateForm() {
     return (
       fields.email.length > 0 &&
@@ -33,10 +34,13 @@ export default function Signup() {
     );
   }
 
+  //only allow them to submit their confirmation code if its valid
+  //note this logic doesn't actually check if it's the RIGHT code, that's done in handleConfirmationSubmit()
   function validateConfirmationForm() {
     return fields.confirmationCode.length > 0;
   }
 
+  //handle the initiial steps of user registration
   async function handleSubmit(event) {
     event.preventDefault();
   
@@ -55,6 +59,7 @@ export default function Signup() {
     }
   }
   
+  //final step: confirm the code from email and finalize user creation on backend + sign them in
   async function handleConfirmationSubmit(event) {
     event.preventDefault();
   
@@ -72,6 +77,7 @@ export default function Signup() {
     }
   }
 
+  //render the form that allows the user to confirm the code from their email
   function renderConfirmationForm() {
     return (
       <form onSubmit={handleConfirmationSubmit}>
@@ -98,6 +104,7 @@ export default function Signup() {
     );
   }
 
+  //render the form that allows the user to sign up if they have a valid email + pwd
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>
@@ -139,6 +146,7 @@ export default function Signup() {
     );
   }
 
+  // render initial form / confirmation depending on how far the user is in the process
   return (
     <div className="Signup">
       {newUser === null ? renderForm() : renderConfirmationForm()}

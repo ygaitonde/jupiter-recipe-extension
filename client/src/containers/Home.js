@@ -12,6 +12,7 @@ export default function Home() {
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
+  //update Home page based on User Authentication status
   useEffect(() => {
     async function onLoad() {
       if (!isAuthenticated) {
@@ -35,6 +36,7 @@ export default function Home() {
     return API.get("recipes", "/recipes");
   }
 
+  // Render the user's already existing recipes + allow them to create new ones
   function renderRecipesList(recipes) {
     return [{}].concat(recipes).map((recipe, i) =>
       i !== 0 ? (
@@ -48,6 +50,7 @@ export default function Home() {
         <LinkContainer key="new" to="/recipes/new">
           <ListGroupItem>
             <h4>
+              {/*this is a plus sign*/}
               <b>{"\uFF0B"}</b> Create a new recipe
             </h4>
           </ListGroupItem>
@@ -56,15 +59,17 @@ export default function Home() {
     );
   }
 
+  //landing page for when user is not authenticated
   function renderLander() {
     return (
       <div className="lander">
         <h1>Jupiter Recipes</h1>
-        <p>A chrome extension for creating recipes using Jupiter products</p>
+        <p>A browser extension for creating recipes using Jupiter products</p>
       </div>
     );
   }
-
+  
+  //render recipes for when user is authenticated (handles loading as well)
   function renderRecipes() {
     return (
       <div className="recipes">

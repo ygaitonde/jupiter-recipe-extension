@@ -1,3 +1,4 @@
+//AWS backend config
 export default {
     apiGateway: {
       REGION: "us-east-1",
