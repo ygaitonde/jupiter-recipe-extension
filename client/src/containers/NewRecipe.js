@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { API } from "aws-amplify";
 import { onError } from "../libs/errorLib";
+import config from "../config"
 import axios from 'axios'
 import "./NewRecipe.css";
 
@@ -12,6 +13,7 @@ export default function NewRecipe() {
   const [name, setName] = useState("");
   const [content, setContent] = useState([])
   const [query, setQuery] = useState("")
+  const [recipeUrl, setRecipeUrl] = useState("")
   const [results, setResults] = useState({})
   const [isLoading, setIsLoading] = useState(false);
 
@@ -78,7 +80,9 @@ export default function NewRecipe() {
       }
     })
     .then((res) => {
+      console.log(res)
       setResults(res.data.data.search.slice(0,5))
+      console.log(results)
     })
     .catch(console.error);
   }
@@ -106,12 +110,14 @@ export default function NewRecipe() {
 
   // use object mapping to render all the recipe contents and change the quantity of each product
   function renderRecipeContent(){
-    console.log(content.length)
+    console.log(content)
     if (content.length > 0) {
       return (
         <div className='card'>
-
           {content.map((ingredient) => {
+            if(ingredient.name.length > 75){
+              ingredient.name = ingredient.name.substr(0,70) + "..."
+            }
             return (
               <div key={ingredient.productId}>
                 <a href={`https://app.jupiter.co/product/${ingredient.productId}`} target='_blank'>
@@ -162,11 +168,64 @@ export default function NewRecipe() {
 
     console.log(content)
   }
+
+  //function that uses the spoonacular API to get the ingredients from the recipe, look up the jupiter products
+  //associated with the ingredients from the recipe, and add those products to the recipe
+  //KNOWN ISSUE: currently not handling if the user puts in an invalid URL
+  async function getURLContent(e){
+    const API_KEY = config.spoonacular.API_KEY
+    fetch(`https://api.spoonacular.com/recipes/extract?apiKey=${API_KEY}&url=${recipeUrl}`)
+    .then(response => response.json())
+    .then(data => {
+      setName(data.title)
+      console.log(data)
+      let ingredients = data.extendedIngredients
+      for(let i = 0; i<ingredients.length; i++){
+        const url = "https://graphql.jupiter.co/";
+        axios({
+          url: url,
+          method: 'post',
+          data: {
+              query: `
+                query{
+                  search(page:0, query: "${ingredients[i].name}"){
+                    name
+                    productId{
+                      value
+                    }
+                  }
+                }
+              `
+          }
+        })
+        .then((res) => {
+          const product = res.data.data.search[0]
+          if(product){
+            handleProductClick(e, product.name,product.productId.value)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+    }) 
+    //bug: this isn't actually sending users back to the homepage
+    .catch((error) => {
+      alert(error+"please reload the extension")
+      history.push("/")
+    }); 
+  }
   
   // render the form that allows user to create the name, see ingredients they've added,
   // add new ingredients, and create the recipe
   return (
     <div className="NewRecipe">
+      <h4>Load a recipe from another site:</h4>
+      <input
+        onChange={e => setRecipeUrl(e.target.value)}
+      />
+      <button className="add-btn" onClick={(e) => getURLContent(e)}>Load Recipe</button>
+      <hr />
       <form onSubmit={handleSubmit}>
         <h4>Recipe name:</h4>
         <FormGroup controlId="name">
