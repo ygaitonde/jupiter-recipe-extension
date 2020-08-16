@@ -51,7 +51,6 @@ export default function NewRecipe() {
   
   // post new recipe to backend API
   function createRecipe(name) {
-    console.log("name: ", name)
     return API.post("recipes", "/recipes", {
       body: {
           name: name,
@@ -80,9 +79,7 @@ export default function NewRecipe() {
       }
     })
     .then((res) => {
-      console.log(res)
       setResults(res.data.data.search.slice(0,5))
-      console.log(results)
     })
     .catch(console.error);
   }
@@ -110,13 +107,12 @@ export default function NewRecipe() {
 
   // use object mapping to render all the recipe contents and change the quantity of each product
   function renderRecipeContent(){
-    console.log(content)
     if (content.length > 0) {
       return (
         <div className='card'>
           {content.map((ingredient) => {
-            if(ingredient.name.length > 75){
-              ingredient.name = ingredient.name.substr(0,70) + "..."
+            if(ingredient.name.length > 60){
+              ingredient.name = ingredient.name.substr(0,50) + "..."
             }
             return (
               <div key={ingredient.productId}>
@@ -152,21 +148,18 @@ export default function NewRecipe() {
     else{
       oldIngredient.quantity = parseInt(val)
     }
-    console.log(contentCopy)
     setContent(content => [...contentCopy])
   }
 
   //add user selected product to recipe 
   function handleProductClick(e, name, productId){
     e.preventDefault()
-    console.log(content)
     setQuery("")
     setResults([])
 
     let ingredient = {name: name, quantity: 1, productId: productId}
     setContent(content => [...content, ingredient])
 
-    console.log(content)
   }
 
   //function that uses the spoonacular API to get the ingredients from the recipe, look up the jupiter products
@@ -178,7 +171,6 @@ export default function NewRecipe() {
     .then(response => response.json())
     .then(data => {
       setName(data.title)
-      console.log(data)
       let ingredients = data.extendedIngredients
       for(let i = 0; i<ingredients.length; i++){
         const url = "https://graphql.jupiter.co/";
@@ -209,11 +201,6 @@ export default function NewRecipe() {
         })
       }
     }) 
-    //bug: this isn't actually sending users back to the homepage
-    .catch((error) => {
-      alert(error+". Please reload the extension")
-      history.push("/")
-    }); 
   }
   
   // render the form that allows user to create the name, see ingredients they've added,

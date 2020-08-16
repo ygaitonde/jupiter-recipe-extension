@@ -1,4 +1,5 @@
-//AWS backend config + Spoonacular API key
+//AWS backend config + Spoonacular API key (I know I shouldn't expose my API Key, 
+//but in the interest of ease of setup for Jupiter folks I'm leaving it like this for the time being)
 export default {
     apiGateway: {
       REGION: "us-east-1",

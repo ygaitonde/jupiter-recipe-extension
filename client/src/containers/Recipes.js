@@ -46,7 +46,6 @@ export default function Recipes() {
   
   // update the recipe when the user makes changes
   function saveRecipe(recipe) {
-    console.log(recipe)
     return API.put("recipes", `/recipes/${id}`, {
       body: {
         recipe
@@ -100,7 +99,6 @@ export default function Recipes() {
 
   //use object mapping to render every product in the recipe
   function renderRecipeContent(){
-    console.log(content.length)
     if (content.length > 0) {
       return (
         <div>

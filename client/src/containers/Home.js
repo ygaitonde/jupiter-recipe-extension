@@ -42,7 +42,6 @@ export default function Home() {
       i !== 0 ? (
         <LinkContainer key={recipe.recipeId} to={`/recipes/${recipe.recipeId}`}>
           <ListGroupItem header={recipe.recipeName}>
-            {console.log(recipe)}
             {"Created: " + new Date(recipe.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
