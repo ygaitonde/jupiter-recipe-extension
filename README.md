@@ -59,7 +59,8 @@ To deploy whatever changes you make, you can run `sls deploy`. That being said, 
 ## Next Steps
 
 - I would like to refactor NewRecipe.js so that the capability to search/add products to a recipe could be abstracted. This would allow for users to edit the contents of a recipe after they created it.
-- I would like to 
+- I would like to change my authentication setup such that users can view any recipe regardless of whether they are authenticated or not, while keeping the functionality that only authenticated users who created the recipe can make changes to their recipe.
+- It would be super cool if I could build an algorithm to parse through the ingredients for recipies on sites like [Tasty](tasty.co). This would allow users to paste in a link for the recipe they were viewing and all the relevant Jupiter products could automatically be added to the recipe.
 
 ## Questions
 
