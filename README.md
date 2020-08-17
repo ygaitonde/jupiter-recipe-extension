@@ -8,7 +8,7 @@ The extension was built with [React](https://reactjs.org/), [NodeJS](https://nod
 
 ## Quick Start Guide
 
-Clone this repository: `git clone git@github.com:Jupiter-Inc/take-home-challenge`.
+Clone this repository: `git clone https://github.com/ygaitonde/jupiter-recipe-extension`.
 
 Add the extension to your browser, selecting the /client/dist folder (or /client/dist/manifest.json if using Firefox) when prompted.
 
