@@ -214,7 +214,7 @@ export default function NewRecipe() {
         placeholder="Paste recipe URL here"
         onChange={e => setRecipeUrl(e.target.value)}
       />
-      <button className="add-btn" onClick={(e) => getURLContent(e)}>Load Recipe</button>
+      <button className="add-btn" onClick={(e) => fetchURLContent(e)}>Load Recipe</button>
       <hr />
       <form onSubmit={handleSubmit}>
         <h4>Recipe name:</h4>
