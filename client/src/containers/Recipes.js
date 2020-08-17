@@ -41,11 +41,12 @@ export default function Recipes() {
 
   //only allow users to save valid changes
   function validateForm() {
-    return content.length > 0 && name.length > 0
+    return content!=null && content.length > 0 && name.length > 0
   }
   
   // update the recipe when the user makes changes
   function saveRecipe(recipe) {
+    recipe.content = content
     return API.put("recipes", `/recipes/${id}`, {
       body: {
         recipe
@@ -61,7 +62,6 @@ export default function Recipes() {
     try {
       await saveRecipe({
         recipeName: name,
-        content: {},
       });
       history.push("/");
     } catch (e) {
@@ -99,7 +99,7 @@ export default function Recipes() {
 
   //use object mapping to render every product in the recipe
   function renderRecipeContent(){
-    if (content.length > 0) {
+    if (content!= null && content.length > 0) {
       return (
         <div>
           {content.map((ingredient) => {
@@ -127,7 +127,7 @@ export default function Recipes() {
   //twitter allows users to edit a tweet that is too long rather than rejecting it 
   function renderShareText(){
     let i = 0
-    if(content.length < 1) { return };
+    if(content==null || content.length < 1) { return };
 
     let string = `Check out my recipe "${name}" which includes `
     for(i;i<content.length-1;i++){
