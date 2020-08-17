@@ -1,6 +1,6 @@
 # Jupiter Recipe Extension
 
-This is a Chrome extension that allows users to search products in the [Jupiter](jupiter.co) catalog and use said products to create recipes.
+This is a Chrome extension that allows users to search products in the [Jupiter](https://jupiter.co/) catalog and use said products to create recipes.
 
 You can also load in a recipe from another site, such as [this recipe from Tasty](https://tasty.co/recipe/garlic-parmesan-chicken-poppers).
 
