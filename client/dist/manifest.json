@@ -2,7 +2,7 @@
   "name": "Jupiter Recipes",
   "version": "1.0.0",
   "manifest_version": 2,
-  "description": "Create recipies using Jupiter's grocery products",
+  "description": "Create recipes using Jupiter's grocery products",
   "icons": {
     "16": "16.png",
     "48": "48.png",

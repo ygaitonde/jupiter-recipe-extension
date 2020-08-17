@@ -1,6 +1,6 @@
 # Jupiter Recipe Extension
 
-This is a Chrome extension that allows users to search products in the [Jupiter](jupiter.co) catalog and use said products to create recipies.
+This is a Chrome extension that allows users to search products in the [Jupiter](jupiter.co) catalog and use said products to create recipes.
 
 You can also load in a recipe from another site, such as [this recipe from Tasty](https://tasty.co/recipe/garlic-parmesan-chicken-poppers).
 
@@ -60,15 +60,15 @@ To deploy whatever changes you make, you can run `sls deploy`. That being said, 
 
 - The user can load in recipe from other site (this works best with recipes from [Tasty](https://tasty.co))
 - The backend of the application is live via AWS API Gateway/Lambda
-- Users can update the names of their recipies and delete their recipies
-- Users can share their recipies via Facebook, Twitter, and Reddit
+- Users can update the names of their recipes and delete their recipes
+- Users can share their recipes via Facebook, Twitter, and Reddit
 - The user authentication process includes an email confirmation code.
 
 ## Next Steps
 
 - I would like to refactor NewRecipe.js so that the capability to search/add products to a recipe could be abstracted. This would allow for users to edit the contents of a recipe after they created it. In general, NewRecipe.js has grown into kind of a behemoth so some refactoring would definitely help.
 - I would like to change my authentication setup such that users can view any recipe regardless of whether they are authenticated or not, while keeping the functionality that only authenticated users who created the recipe can make changes to their recipe.
-- ~~It would be super cool if I could  parse through the ingredients for recipies on sites like [Tasty](tasty.co). This would allow users to paste in a link for the recipe they were viewing and all the relevant Jupiter products could automatically be added to the recipe!~~ **I ended up implementing this using the [Spoonacular API!](https://spoonacular.com/food-api)**
+- ~~It would be super cool if I could  parse through the ingredients for recipes on sites like [Tasty](tasty.co). This would allow users to paste in a link for the recipe they were viewing and all the relevant Jupiter products could automatically be added to the recipe!~~ **I ended up implementing this using the [Spoonacular API!](https://spoonacular.com/food-api)**
 
 ## Known Bugs
 

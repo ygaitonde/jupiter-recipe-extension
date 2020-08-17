@@ -74,7 +74,7 @@ export default function Recipes() {
     return API.del("recipes", `/recipes/${id}`);
   }
   
-  //make sure users want to delete their recipies
+  //make sure users want to delete their recipes
   async function handleDelete(event) {
     event.preventDefault();
   
@@ -139,7 +139,7 @@ export default function Recipes() {
     return string
   }
   
-  // render the current ingredient list as well as the form which allows users to rename their recipies
+  // render the current ingredient list as well as the form which allows users to rename their recipes
   // and save their changes, or delete their recipe
   return (
     <div className="Recipes">
