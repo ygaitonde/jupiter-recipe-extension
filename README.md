@@ -76,7 +76,7 @@ To deploy whatever changes you make, you can run `sls deploy`. That being said, 
 
 - If a user navigates away from the extension while they are supposed to be filling out the confirmation code, the extension will close and their user registration process will fail. This is an inherent problem to a chrome extension, but the issue is that if they try to sign up with the email they used when they closed the extension, they won't be able to register with it.
 - If a user inputs an invalid url into the field on NewRecipe.js then the extension will break and needs to be reloaded.
-- Right now, recipes can be renamed but if you try and access a renamed recipe you won't be able to.
+- ~~Right now, recipes can be renamed but if you try and access a renamed recipe you won't be able to.~~ Addresed in PR #2
 
 ## Questions
 
