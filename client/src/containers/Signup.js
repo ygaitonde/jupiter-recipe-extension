@@ -133,6 +133,7 @@ export default function Signup() {
             value={fields.confirmPassword}
           />
         </FormGroup>
+        <h6>Password Requirements: At least 6 total characters, one upperchase character, and one special character</h6>
         <LoaderButton
           block
           type="submit"

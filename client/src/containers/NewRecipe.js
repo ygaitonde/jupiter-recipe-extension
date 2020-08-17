@@ -152,12 +152,12 @@ export default function NewRecipe() {
   }
 
   //add user selected product to recipe 
-  function handleProductClick(e, name, productId){
+  function handleProductClick(e, name, productId, quantity=1){
     e.preventDefault()
     setQuery("")
     setResults([])
 
-    let ingredient = {name: name, quantity: 1, productId: productId}
+    let ingredient = {name: name, quantity: quantity, productId: productId}
     setContent(content => [...content, ingredient])
 
   }
@@ -170,10 +170,12 @@ export default function NewRecipe() {
     fetch(`https://api.spoonacular.com/recipes/extract?apiKey=${API_KEY}&url=${recipeUrl}`)
     .then(response => response.json())
     .then(data => {
+      console.log(data)
       setName(data.title)
       let ingredients = data.extendedIngredients
       for(let i = 0; i<ingredients.length; i++){
         const url = "https://graphql.jupiter.co/";
+        let quantity = Math.ceil(ingredients[i].amount)
         axios({
           url: url,
           method: 'post',
@@ -193,7 +195,7 @@ export default function NewRecipe() {
         .then((res) => {
           const product = res.data.data.search[0]
           if(product){
-            handleProductClick(e, product.name,product.productId.value)
+            handleProductClick(e, product.name, product.productId.value, quantity)
           }
         })
         .catch((error) => {
