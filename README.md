@@ -21,6 +21,8 @@ If you would like to play around with the app with a dummy account, use the belo
 
 Please note: during the signup process you will have to pull up your confirmation code on another browser/device, as popup extensions close when you switch tabs/focus. If you close the extension while the app is waiting for a confirmation code you will have to register with a different email.
 
+Also note: for the best user experience use this extension with your browser in fullscreen.
+
 ## Development
 
 ### Codebase Overview
