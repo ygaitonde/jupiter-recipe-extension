@@ -19,3 +19,7 @@
     display: inline-block;
     margin:5px;
   }
+
+  .Recipes{
+    overflow-y:scroll;
+  }

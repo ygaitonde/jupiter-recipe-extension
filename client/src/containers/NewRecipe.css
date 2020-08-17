@@ -3,6 +3,10 @@
     margin-bottom: 0px;
   }
   
+.NewRecipe {
+  overflow-y: scroll;
+}
+
 .NewRecipe form textarea {
   height: 30px;
   font-size: 24px;
