@@ -59,6 +59,49 @@ export default function NewRecipe() {
     });
   }
 
+  //function that uses the spoonacular API to get the ingredients from the recipe, look up the jupiter products
+  //associated with the ingredients from the recipe, and add those products to the recipe
+  //KNOWN ISSUE: currently not handling if the user puts in an invalid URL
+  async function fetchURLContent(e){
+    const API_KEY = config.spoonacular.API_KEY
+    fetch(`https://api.spoonacular.com/recipes/extract?apiKey=${API_KEY}&url=${recipeUrl}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setName(data.title)
+      let ingredients = data.extendedIngredients
+      for(let i = 0; i<ingredients.length; i++){
+        const url = "https://graphql.jupiter.co/";
+        let quantity = Math.ceil(ingredients[i].amount)
+        axios({
+          url: url,
+          method: 'post',
+          data: {
+              query: `
+                query{
+                  search(page:0, query: "${ingredients[i].name}"){
+                    name
+                    productId{
+                      value
+                    }
+                  }
+                }
+              `
+          }
+        })
+        .then((res) => {
+          const product = res.data.data.search[0]
+          if(product){
+            handleProductClick(e, product.name, product.productId.value, quantity)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+    }) 
+  }
+
   // get product search result from Jupiter GraphQL API. update results hook with API query results
   async function fetchSearchResults(){
     const url = "https://graphql.jupiter.co/";
@@ -160,49 +203,6 @@ export default function NewRecipe() {
     let ingredient = {name: name, quantity: quantity, productId: productId}
     setContent(content => [...content, ingredient])
 
-  }
-
-  //function that uses the spoonacular API to get the ingredients from the recipe, look up the jupiter products
-  //associated with the ingredients from the recipe, and add those products to the recipe
-  //KNOWN ISSUE: currently not handling if the user puts in an invalid URL
-  async function getURLContent(e){
-    const API_KEY = config.spoonacular.API_KEY
-    fetch(`https://api.spoonacular.com/recipes/extract?apiKey=${API_KEY}&url=${recipeUrl}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
-      setName(data.title)
-      let ingredients = data.extendedIngredients
-      for(let i = 0; i<ingredients.length; i++){
-        const url = "https://graphql.jupiter.co/";
-        let quantity = Math.ceil(ingredients[i].amount)
-        axios({
-          url: url,
-          method: 'post',
-          data: {
-              query: `
-                query{
-                  search(page:0, query: "${ingredients[i].name}"){
-                    name
-                    productId{
-                      value
-                    }
-                  }
-                }
-              `
-          }
-        })
-        .then((res) => {
-          const product = res.data.data.search[0]
-          if(product){
-            handleProductClick(e, product.name, product.productId.value, quantity)
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      }
-    }) 
   }
   
   // render the form that allows user to create the name, see ingredients they've added,
