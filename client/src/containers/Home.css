@@ -2,6 +2,10 @@
     padding: 80px 0;
     text-align: center;
   }
+
+.Home{
+  height:600px !important;
+}
   
   .Home .lander h1 {
     font-family: "Open Sans", sans-serif;

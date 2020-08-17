@@ -4,7 +4,7 @@
   }
   
 .NewRecipe {
-  overflow-y: scroll;
+  height: 100% !important;
 }
 
 .NewRecipe form textarea {
